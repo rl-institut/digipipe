@@ -1,2 +1,4 @@
-Originale Datenquelle: https://www.marktstammdatenregister.de/MaStR/Datendownload
-Prozessiert mit: https://github.com/OpenEnergyPlatform/open-MaStR/
+{
+  "Originale Datenquelle": "https://www.marktstammdatenregister.de/MaStR/Datendownload",
+  "Prozessiert mit": "https://github.com/OpenEnergyPlatform/open-MaStR/}"
+}
