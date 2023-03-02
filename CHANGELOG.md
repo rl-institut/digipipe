@@ -27,4 +27,3 @@ and the versioning aim to respect [Semantic Versioning](http://semver.org/spec/v
 - Fix loading of global config when in workflow dir
 
 ### Removed
-
