@@ -92,7 +92,7 @@ Rules, config and info
 - Custom, dataset-specific scripts are located in `scripts`.
 
 > **Example:**
-> 
+>
 > Using datasets from `store/preprocessed/` and `store/datasets/`:
 > - Dataset H: Wind energy turbines in the region of interest (from datasets E+F)
 > - Dataset I: Normalized wind energy feedin timeseries for the region (from
@@ -153,7 +153,7 @@ directory on the [RLI Wolke](https://wolke.rl-institut.de/f/160572).
 
 Each data directory in the provided templates contain an empty `.gitkeep`
 file. When creating a new dataset, please commit this file too to make sure
-the (empty) data directory is retained. 
+the (empty) data directory is retained.
 
 ### Coordinate reference system
 
@@ -162,7 +162,7 @@ Please use LAEA Europe (EPSG:3035) as default CRS when writing geodata.
 **TODO: REVISE**
 
 - The files in `store/raw/` can have an arbitrary CRS.
-- In the preprocessing (step 1) it is converted to the CRS specified in the global `config.yml` -> `preprocessing` -> 
+- In the preprocessing (step 1) it is converted to the CRS specified in the global `config.yml` -> `preprocessing` ->
   `crs`. It is important to use a equal-area CRS to make sure operations such as buffering work properly. By default,
   it is set to LAEA Europe (EPSG:3035).
 - The final output is written in CRS specified in the global `config.yml` -> `output` -> `crs`. By default, it is set

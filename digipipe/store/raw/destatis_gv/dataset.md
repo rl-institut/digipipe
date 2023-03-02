@@ -1,3 +1,3 @@
 # Municipalities population
 
-Municipalities with population from the Federal Statistical Office. 
+Municipalities with population from the Federal Statistical Office.

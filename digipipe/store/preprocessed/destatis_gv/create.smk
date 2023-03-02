@@ -10,7 +10,7 @@ DATASET_PATH = get_abs_dataset_path("preprocessed", "destatis_gv")
 
 rule create:
     """
-    Extract municipality population data from Excel files and save to CSVs 
+    Extract municipality population data from Excel files and save to CSVs
     """
     input:
         get_abs_dataset_path("raw", "destatis_gv") / "data" / "3112{year}_Auszug_GV.xlsx"

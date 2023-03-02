@@ -10,7 +10,7 @@
 
 Pipeline for data and energy system in the Digiplan project.
 
-## Installation 
+## Installation
 
 **Note: Linux only, Windows is currently not supported.**
 
@@ -40,7 +40,7 @@ Install package with
 ### Install using conda
 
 Make sure you have conda installed, e.g. miniconda. Then create the env:
-    
+
     conda create -n digipipe /local/path/to/digipipe/environment.yml
     conda activate digipipe
 

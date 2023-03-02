@@ -48,4 +48,4 @@ The graphs also provide information on the completed (solid lines) and pending
   - [store/datasets/module.smk](../store/datasets/module.smk)
 - In each of these modules, the rules as well as the config from the contained
   datasets are imported.
-  
+
