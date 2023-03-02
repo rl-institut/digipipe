@@ -34,30 +34,29 @@ repository = "https://github.com/rl-institut/digipipe"
 "Bug Tracker" = "https://github.com/rl-institut/digipipe/issues"
 
 [tool.poetry.dependencies]
-python = ">=3.7"
-# TODO: Add packages here via `poetry add <package_name>
-# TODO: Following packages need to be added: pandas
-# TODO: geopandas
-# TODO: shapely
-# TODO: snakemake
-# TODO: matplotlib
-# TODO: pyyaml
-# TODO: descartes
-# TODO: fiona
-# TODO: rtree
-# TODO: openpyxl==3.1.0
-# TODO: plotly
-# TODO: rasterstats
-# TODO: networkx
-# TODO: pygraphviz
-# TODO: pygments
-# TODO: rasterio
-# TODO: Jinja2==3.0.3
-# TODO: geopy
+python = ">=3.8,<4.0"
+pandas = "^1.5.3"
+geopandas = "^0.12.2"
+shapely = "^2.0.1"
+snakemake = "^7.24.0"
+matplotlib = "^3.7.0"
+pyyaml = "^6.0"
+descartes = "^1.1.0"
+fiona = "<=1.9"
+rtree = "^1.0.1"
+openpyxl = "3.1.0"
+plotly = "^5.13.1"
+rasterstats = "^0.18.0"
+networkx = "^3.0"
+pygraphviz = "^1.10"
+pygments = "^2.14.0"
+rasterio = "^1.3.6"
+jinja2 = "3.0.3"
+geopy = "^2.3.0"
+oemoflex = { git = "https://git@github.com/rl-institut/oemoflex", tag = "0.0.1"}
+
 
 [tool.poetry.dev-dependencies]
-Werkzeug = "^2.0.1" # https://github.com/pallets/werkzeug   # TODO: Find out if needed
-ipdb = "^0.13.7"  # https://github.com/gotcha/ipdb   # TODO: Find out if needed
 sphinx = "^5.3.0"  # https://github.com/sphinx-doc/sphinx
 sphinx-material = "^0.0.35"
 m2r2 = "^0.3.3"
