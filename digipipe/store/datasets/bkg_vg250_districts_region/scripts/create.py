@@ -3,7 +3,12 @@ import sys
 import geopandas as gpd
 
 from digipipe.scripts.config import read_config
-from digipipe.scripts.geo import convert_to_multipolygon, rename_filter_attributes, reproject_simplify, write_geofile
+from digipipe.scripts.geo import (
+    convert_to_multipolygon,
+    rename_filter_attributes,
+    reproject_simplify,
+    write_geofile,
+)
 
 
 def process():

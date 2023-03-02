@@ -3,7 +3,11 @@ import sys
 
 import geopandas as gpd
 
-from digipipe.scripts.geo import convert_to_multipolygon, reproject_simplify, write_geofile
+from digipipe.scripts.geo import (
+    convert_to_multipolygon,
+    reproject_simplify,
+    write_geofile,
+)
 
 
 def process():

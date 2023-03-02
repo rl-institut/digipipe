@@ -2,15 +2,15 @@
 Helper functions for geodata processing
 """
 
+import os
+from collections import OrderedDict
+from typing import Tuple, Union
+
 import fiona
 import geopandas as gpd
-import os
 import pandas as pd
-
-from collections import OrderedDict
 from shapely.geometry.multipolygon import MultiPolygon
 from shapely.ops import transform
-from typing import Tuple, Union
 
 from digipipe.config import GLOBAL_CONFIG
 

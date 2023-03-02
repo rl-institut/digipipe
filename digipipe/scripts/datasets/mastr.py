@@ -1,11 +1,12 @@
 """Shared functions for processing data from MaStR dataset"""
 
+from typing import Tuple, Union
+
 import geopandas as gpd
 import pandas as pd
 from geopy.exc import GeocoderUnavailable
 from geopy.extra.rate_limiter import RateLimiter
 from geopy.geocoders import Nominatim
-from typing import Tuple, Union
 
 
 def cleanse(units: Union[pd.DataFrame, gpd.GeoDataFrame]) -> Union[pd.DataFrame, gpd.GeoDataFrame]:
