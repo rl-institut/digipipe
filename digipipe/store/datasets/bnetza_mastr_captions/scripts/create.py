@@ -14,14 +14,10 @@ def process() -> None:
     for mastr_config in snakemake.params.mastr_configs.values():
         for k, v in mastr_config.get("attributes", {}).items():
             if naming_dict.get(k, None) is None:
-                naming_dict[v] = replace_umlaut(
-                    re.sub("([a-z])([A-Z])", "\g<1> \g<2>", k)
-                )
+                naming_dict[v] = replace_umlaut(re.sub("([a-z])([A-Z])", "\g<1> \g<2>", k))
 
     naming_dict = {
-        "datasets_caption_map": {
-            _: "mastr" for _ in snakemake.params.mastr_configs.keys()
-        },
+        "datasets_caption_map": {_: "mastr" for _ in snakemake.params.mastr_configs.keys()},
         "captions": {"mastr": naming_dict},
     }
 

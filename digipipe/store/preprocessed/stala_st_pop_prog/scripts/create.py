@@ -26,9 +26,7 @@ def process() -> None:
 
     # Drop non-municipal data
     data = data.loc[data.ags.str.len() > 2]
-    data = data.assign(
-        ags=data.ags.str.pad(width=8, side="right", fillchar="0")
-    ).set_index("ags")
+    data = data.assign(ags=data.ags.str.pad(width=8, side="right", fillchar="0")).set_index("ags")
 
     data.to_csv(snakemake.output[0])
 

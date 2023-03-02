@@ -18,8 +18,7 @@ def locate_global_config() -> Path:
         return (cwd.parent / config_dir).resolve()
     else:
         raise FileNotFoundError(
-            "Global config file not found, make sure you execute the workflow "
-            "in digipipe/ or digipipe/workflow/ ."
+            "Global config file not found, make sure you execute the workflow " "in digipipe/ or digipipe/workflow/ ."
         )
 
 

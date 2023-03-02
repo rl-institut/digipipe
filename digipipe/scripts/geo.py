@@ -40,9 +40,7 @@ def read_schema_from_file(file: str) -> Tuple[str, OrderedDict]:
     return schema_in_geom, schema_in_props
 
 
-def convert_to_multipolygon(
-        gdf: gpd.GeoDataFrame
-) -> gpd.GeoDataFrame:
+def convert_to_multipolygon(gdf: gpd.GeoDataFrame) -> gpd.GeoDataFrame:
     """Convert geometry column to type MultiPolygon
 
     Parameters
@@ -61,10 +59,7 @@ def convert_to_multipolygon(
         """
         return transform(lambda x, y, z=None: (x, y), row)
 
-    gdf["geometry"] = [MultiPolygon([feature])
-                       if feature.type == "Polygon"
-                       else feature
-                       for feature in gdf["geometry"]]
+    gdf["geometry"] = [MultiPolygon([feature]) if feature.type == "Polygon" else feature for feature in gdf["geometry"]]
 
     gdf["geometry"] = gdf["geometry"].apply(remove_z)
 
@@ -72,12 +67,12 @@ def convert_to_multipolygon(
 
 
 def write_geofile(
-        gdf: gpd.GeoDataFrame,
-        file: str,
-        layer_name: str = None,
-        schema: dict = None,
-        driver: str = "GPKG",
-        encoding: str = "utf-8"
+    gdf: gpd.GeoDataFrame,
+    file: str,
+    layer_name: str = None,
+    schema: dict = None,
+    driver: str = "GPKG",
+    encoding: str = "utf-8",
 ) -> None:
     """Write geodata to file
 
@@ -106,17 +101,13 @@ def write_geofile(
         types = gdf.geometry.type.unique()
         raise ValueError(f"Data contain multiple geometry types: {types} !")
 
-    gdf.to_file(file,
-                layer=layer_name,
-                schema=schema,
-                driver=driver,
-                encoding=encoding)
+    gdf.to_file(file, layer=layer_name, schema=schema, driver=driver, encoding=encoding)
 
 
 def rename_filter_attributes(
-        gdf: Union[pd.DataFrame, gpd.GeoDataFrame],
-        attrs_filter_by_values: dict = None,
-        attrs_mapping: dict = None,
+    gdf: Union[pd.DataFrame, gpd.GeoDataFrame],
+    attrs_filter_by_values: dict = None,
+    attrs_mapping: dict = None,
 ) -> Union[pd.DataFrame, gpd.GeoDataFrame]:
     """Rename attributes and filter them by values
 
@@ -153,9 +144,7 @@ def rename_filter_attributes(
             elif isinstance(v, (int, float)):
                 query += f" & {k}=={v}"
             else:
-                raise ValueError(
-                    "Data type in attribute filter is not supported!"
-                )
+                raise ValueError("Data type in attribute filter is not supported!")
         query = query[2:]
         gdf = gdf.query(query)
 
@@ -168,12 +157,12 @@ def rename_filter_attributes(
 
 
 def reproject_simplify(
-        gdf: gpd.GeoDataFrame,
-        target_crs: str = GLOBAL_CONFIG["global"]["geodata"]["crs"].lower(),
-        min_size: float = None,
-        simplify_tol: float = None,
-        fix_geom: bool = False,
-        add_id_column: bool = False,
+    gdf: gpd.GeoDataFrame,
+    target_crs: str = GLOBAL_CONFIG["global"]["geodata"]["crs"].lower(),
+    min_size: float = None,
+    simplify_tol: float = None,
+    fix_geom: bool = False,
+    add_id_column: bool = False,
 ) -> gpd.GeoDataFrame:
     """General purpose function for processing of geodata
 
@@ -209,8 +198,7 @@ def reproject_simplify(
         """Check if requested CRS is LAEA Europe (EPSG:3035)"""
         if target_crs.lower() != "epsg:3035":
             raise ValueError(
-                f"Cannot apply {operation} in non-equistant CRS "
-                f"(requested CRS: {target_crs.lower()}) !"
+                f"Cannot apply {operation} in non-equistant CRS " f"(requested CRS: {target_crs.lower()}) !"
             )
 
     # Transform to target CRS
@@ -228,10 +216,7 @@ def reproject_simplify(
     # Generalize
     if simplify_tol is not None:
         check_crs("simplification")
-        gdf["geometry"] = gdf.simplify(
-            simplify_tol,
-            preserve_topology=True
-        )
+        gdf["geometry"] = gdf.simplify(simplify_tol, preserve_topology=True)
 
     # Fix invalid geometries
     if fix_geom is True:
@@ -248,10 +233,10 @@ def reproject_simplify(
 
 
 def overlay(
-        gdf: gpd.GeoDataFrame,
-        gdf_overlay: gpd.GeoDataFrame,
-        retain_rename_overlay_columns: dict = None,
-        gdf_use_centroid: bool = False
+    gdf: gpd.GeoDataFrame,
+    gdf_overlay: gpd.GeoDataFrame,
+    retain_rename_overlay_columns: dict = None,
+    gdf_use_centroid: bool = False,
 ) -> gpd.GeoDataFrame:
     """Clips geodata to polygon
 
@@ -282,21 +267,15 @@ def overlay(
         geometry_backup = gdf.geometry.copy()
 
         # Clip and rename columns
-        gdf_clipped = gpd.overlay(
-            gdf.assign(geometry=gdf.centroid),
-            gdf_overlay[columns],
-            how='intersection'
-        ).rename(
-            columns=retain_rename_overlay_columns
-        ).assign(
-            geometry=geometry_backup
+        gdf_clipped = (
+            gpd.overlay(gdf.assign(geometry=gdf.centroid), gdf_overlay[columns], how="intersection")
+            .rename(columns=retain_rename_overlay_columns)
+            .assign(geometry=geometry_backup)
         )
     else:
         # Clip and rename columns
-        gdf_clipped = gpd.overlay(
-            gdf,
-            gdf_overlay[columns],
-            how='intersection'
-        ).rename(columns=retain_rename_overlay_columns)
+        gdf_clipped = gpd.overlay(gdf, gdf_overlay[columns], how="intersection").rename(
+            columns=retain_rename_overlay_columns
+        )
 
     return gdf_clipped

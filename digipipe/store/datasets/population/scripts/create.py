@@ -4,10 +4,7 @@ import pandas as pd
 
 def process() -> None:
     pop_history = pd.concat(
-        [
-            pd.read_csv(f, dtype={"ags": str}, index_col="ags")
-            for f in snakemake.input.pop_history
-        ],
+        [pd.read_csv(f, dtype={"ags": str}, index_col="ags") for f in snakemake.input.pop_history],
         axis=1,
     )
     pop_prognosis = pd.read_csv(
@@ -37,31 +34,21 @@ def process() -> None:
         year_delta_extrapol = year - avail_years_prognosis[-1]
         pop_prognosis[str(year)] = (
             pop_prognosis[str(avail_years_prognosis[-1])]
-            + (
-                pop_prognosis[str(avail_years_prognosis[-1])]
-                - pop_prognosis[str(avail_years_prognosis[-2])]
-            )
+            + (pop_prognosis[str(avail_years_prognosis[-1])] - pop_prognosis[str(avail_years_prognosis[-2])])
             / year_delta_base
             * year_delta_extrapol
         )
 
     # Drop not requested prognosis years and glue everything together
     pop_prognosis.drop(
-        columns=[
-            c
-            for c in pop_prognosis.columns
-            if int(c) not in prognosis_years + extrapol_years
-        ],
+        columns=[c for c in pop_prognosis.columns if int(c) not in prognosis_years + extrapol_years],
         inplace=True,
     )
     population = pd.concat([pop_history, pop_prognosis], axis=1)
 
     # Add municipality_id and data origin
     population = (
-        pd.concat(
-            [muns.set_index("ags")["id"].rename("municipality_id"),
-             population],
-            axis=1)
+        pd.concat([muns.set_index("ags")["id"].rename("municipality_id"), population], axis=1)
         .sort_index()
         .set_index("municipality_id", drop=True)
     )
