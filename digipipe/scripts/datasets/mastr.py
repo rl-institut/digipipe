@@ -186,6 +186,11 @@ def geocode(
         -------
         geopy.extra.rate_limiter.RateLimiter
             Nominatim RateLimiter geocoding class to use for geocoding.
+
+        Raises
+        ------
+        GeocoderUnavailable
+        If the geocoder is unavailable.
         """
         try:
             locator = Nominatim(user_agent=user_agent)
@@ -193,9 +198,10 @@ def geocode(
                 locator.geocode,
                 min_delay_seconds=interval,
             )
-        except GeocoderUnavailable as e:
-            print("Geocoder unavailable, aborting geocoding!")
-            raise
+        except GeocoderUnavailable as error:
+            raise GeocoderUnavailable(
+                "Geocoder unavailable, aborting geocoding! Exception raises: " + repr(error)
+            ) from error
 
     # Define geocoder
     ratelimiter = geocoder(
