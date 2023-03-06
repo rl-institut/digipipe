@@ -46,6 +46,20 @@ Notes:
 - Make sure you have GDAL>=3.0 as older versions will not work
 - `imagemagick` is optional and only required for report creation
 
+## Contributing to digipipe
+
+You can write `issues <https://github.com/rl-institut-private/digipipe/issues>`_ to announce bugs or to propose enhancements.
+
+If you want to participate in the development of digipipe, please make sure you use pre-commit.
+
+You activate it with:
+
+    install pre-commit
+
+To trigger a check manually, execute:
+
+    pre-commit run -a
+
 ## Further reading on structure, pipeline and conventions
 
 - Datasets/data flow: [DATASETS.md](digipipe/store/DATASETS.md)
