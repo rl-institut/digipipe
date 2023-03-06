@@ -62,3 +62,13 @@ repos:
             "--disable=C0103", # Disable the C0103 error TODO: To be fixed
             "--max-line-length=120", # Set the maximum line length to 120
           ]
+      - id: mypy
+        name: mypy
+        entry: mypy
+        language: python
+        types: [python]
+        args:
+          [
+            "--ignore-missing-imports", # Ignore missing imports
+            "--warn-unused-ignores", # Warn about unused ignore comments
+          ]
