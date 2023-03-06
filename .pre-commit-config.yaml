@@ -59,5 +59,6 @@ repos:
             "--disable=C0114", # Disable the C0114 error TODO: To be fixed
             "--disable=C0116", # Disable the C0116 error TODO: To be fixed
             "--disable=R1729", # Disable the R1729 error TODO: To be fixed
+            "--disable=C0103", # Disable the C0103 error TODO: To be fixed
             "--max-line-length=120", # Set the maximum line length to 120
           ]
