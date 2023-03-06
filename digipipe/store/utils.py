@@ -83,7 +83,7 @@ def create_tag_string_ogr(taglist):
     """
     tag_conditions = (
         '-where "'
-        + " OR ".join(["=".join(['\\"' + tag + '\\"', f'\\"' + str(val) + '\\"']) for tag, val in taglist])
+        + " OR ".join(["=".join(['\\"' + tag + '\\"', '\\"' + str(val) + '\\"']) for tag, val in taglist])
         + '"'
     )
     tags = ",".join([tag for tag, _ in taglist])
