@@ -18,6 +18,7 @@ and the versioning aim to respect [Semantic Versioning](http://semver.org/spec/v
 - Clean rule
 - Datasets attribute captions
 - Create list of region-specific datasets in the docs
+- Add pre-commit in order to check for errors and linting bugs before commits
 
 ### Changed
 
