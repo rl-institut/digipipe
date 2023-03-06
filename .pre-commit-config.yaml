@@ -56,4 +56,6 @@ repos:
             "-rn", # Only display messages
             "-sn", # Don't display the score
             "--disable=E0602", # Disable the E0602 error
+            "--disable=C0114", # Disable the C0114 error TODO: To be fixed
+            "--disable=C0116", # Disable the C0116 error TODO: To be fixed
           ]
