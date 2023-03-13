@@ -18,6 +18,7 @@ and the versioning aim to respect [Semantic Versioning](http://semver.org/spec/v
 - Clean rule
 - Datasets attribute captions
 - Create list of region-specific datasets in the docs
+- pyproject.toml and poetry.lock file have been added with the conversion to poetry
 - Add pre-commit in order to check for errors and linting bugs before commits
 
 ### Changed
@@ -26,5 +27,9 @@ and the versioning aim to respect [Semantic Versioning](http://semver.org/spec/v
 - Retain mastr_id in MaStR datasets
 - Fix loading of empty yml files
 - Fix loading of global config when in workflow dir
+- The package management in digipipe has been changed to poetry.
+- The installation of a virtual environment is done only from the environment.yml file and via conda.
 
 ### Removed
+
+- setup.py and requirements.txt files are omitted with the conversion to poetry
