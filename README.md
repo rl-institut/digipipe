@@ -54,7 +54,7 @@ If you want to participate in the development of digipipe, please make sure you 
 
 You activate it with:
 
-    install pre-commit
+    pre-commit install
 
 To trigger a check manually, execute:
 
