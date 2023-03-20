@@ -69,13 +69,13 @@ repos:
             "--disable=E0611", # Disable the E0611 error TODO: To be fixed
             "--max-line-length=80", # Set the maximum line length to 80
           ]
-#      - id: mypy
-#        name: mypy
-#        entry: mypy
-#        language: python
-#        types: [python]
-#        args:
-#          [
-#            "--ignore-missing-imports", # Ignore missing imports
-#            "--warn-unused-ignores", # Warn about unused ignore comments
-#          ]
+      - id: mypy
+        name: mypy
+        entry: mypy
+        language: python
+        types: [python]
+        args:
+          [
+            "--ignore-missing-imports", # Ignore missing imports
+            "--warn-unused-ignores", # Warn about unused ignore comments
+          ]
