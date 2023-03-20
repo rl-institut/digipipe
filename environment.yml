@@ -4,7 +4,6 @@ channels:
 dependencies:
    - python=3.8
    - gdal=3.*
-   - python-gdal # TODO: Fix this - Does not work yet
    - coincbc   # TODO: To be deleted after issue #52 done
    - libspatialindex
    - imagemagick

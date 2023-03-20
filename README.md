@@ -30,8 +30,11 @@ conda env create -f environment.yml
 conda activate digiplan
 ```
 
-Install [poetry](https://python-poetry.org/) (python dependency manager used in this
-project) and dependencies for the project (Note: Installing poetry via pip into same environment is not recommended and can cause trouble! Instead it should be installed system-wide via command below or [pipx](https://python-poetry.org/docs/#installing-with-pipx)):
+Install [poetry](https://python-poetry.org/) (python dependency manager used
+in this project) and dependencies for the project (Note: Installing poetry via
+pip into same environment is not recommended and can cause trouble! Instead it
+should be installed system-wide via command below or
+[pipx](https://python-poetry.org/docs/#installing-with-pipx)):
 
 ```
 curl -sSL https://install.python-poetry.org | python3 -
