@@ -9,7 +9,9 @@ from geopy.extra.rate_limiter import RateLimiter
 from geopy.geocoders import Nominatim
 
 
-def cleanse(units: Union[pd.DataFrame, gpd.GeoDataFrame]) -> Union[pd.DataFrame, gpd.GeoDataFrame]:
+def cleanse(
+    units: Union[pd.DataFrame, gpd.GeoDataFrame]
+) -> Union[pd.DataFrame, gpd.GeoDataFrame]:
     """Do some basic cleansing of MaStR unit data.
 
     This involves:
@@ -65,7 +67,10 @@ def add_voltage_level(
         locations_path,
         usecols=["MastrNummer", "Netzanschlusspunkte"],
     ).rename(columns={"MastrNummer": "mastr_location_id2"})
-    gridconn = pd.read_csv(gridconn_path, usecols=["NetzanschlusspunktMastrNummer", "Spannungsebene"])
+    gridconn = pd.read_csv(
+        gridconn_path,
+        usecols=["NetzanschlusspunktMastrNummer", "Spannungsebene"],
+    )
     locations = (
         locations.merge(
             gridconn,
@@ -200,7 +205,8 @@ def geocode(
             )
         except GeocoderUnavailable as error:
             raise GeocoderUnavailable(
-                "Geocoder unavailable, aborting geocoding! Exception raises: " + repr(error)
+                "Geocoder unavailable, aborting geocoding! Exception raises: "
+                + repr(error)
             ) from error
 
     # Define geocoder
@@ -222,16 +228,22 @@ def geocode(
         f"Geocoding {len(unique_locations)} unique locations, this will take "
         f"about {round(len(unique_locations) * interval / 60, 1)} min..."
     )
-    unique_locations = unique_locations.assign(location=unique_locations.zip_and_city.apply(ratelimiter))
     unique_locations = unique_locations.assign(
-        point=unique_locations.location.apply(lambda loc: tuple(loc.point) if loc else None)
+        location=unique_locations.zip_and_city.apply(ratelimiter)
+    )
+    unique_locations = unique_locations.assign(
+        point=unique_locations.location.apply(
+            lambda loc: tuple(loc.point) if loc else None
+        )
     )
     unique_locations[["latitude", "longitude", "altitude"]] = pd.DataFrame(
         unique_locations.point.tolist(), index=unique_locations.index
     )
     unique_locations = gpd.GeoDataFrame(
         unique_locations,
-        geometry=gpd.points_from_xy(unique_locations.longitude, unique_locations.latitude),
+        geometry=gpd.points_from_xy(
+            unique_locations.longitude, unique_locations.latitude
+        ),
         crs="EPSG:4326",
     )
     # Merge locations back in units
@@ -287,7 +299,9 @@ def geocode_units_wo_geometry(
         row) with aggregated attributes as given by `columns_agg_functions`.
     """
 
-    def aggregate_units_wo_geometry(units_gdf: gpd.GeoDataFrame) -> gpd.GeoDataFrame:
+    def aggregate_units_wo_geometry(
+        units_gdf: gpd.GeoDataFrame,
+    ) -> gpd.GeoDataFrame:
         """Aggregate units by approximated position
 
         Parameters
@@ -316,7 +330,11 @@ def geocode_units_wo_geometry(
             units_agg_gdf,
             geometry=gpd.points_from_xy(units_agg_gdf.lon, units_agg_gdf.lat),
             crs=target_crs,
-        )[["zip_code", "city"] + list(columns_agg_functions.keys()) + ["geometry"]]
+        )[
+            ["zip_code", "city"]
+            + list(columns_agg_functions.keys())
+            + ["geometry"]
+        ]
         return units_agg_gdf.assign(
             status="In Betrieb oder in Planung",
             geometry_approximated=1,
@@ -324,7 +342,9 @@ def geocode_units_wo_geometry(
 
     # Check if all required columns are present
     if not all([c in units_df.columns for c in ["zip_code", "city"]]):
-        raise ValueError("Column zip_code or city not present, geocoding not possible.")
+        raise ValueError(
+            "Column zip_code or city not present, geocoding not possible."
+        )
     columns_agg_names = list({c for c, _ in columns_agg_functions.values()})
     if not all([c in units_df.columns for c in columns_agg_names]):
         raise ValueError(
@@ -337,6 +357,8 @@ def geocode_units_wo_geometry(
         geometry_approximated=1,
     )
 
-    units_with_inferred_geom_agg_gdf = aggregate_units_wo_geometry(units_with_inferred_geom_gdf.copy())
+    units_with_inferred_geom_agg_gdf = aggregate_units_wo_geometry(
+        units_with_inferred_geom_gdf.copy()
+    )
 
     return units_with_inferred_geom_gdf, units_with_inferred_geom_agg_gdf

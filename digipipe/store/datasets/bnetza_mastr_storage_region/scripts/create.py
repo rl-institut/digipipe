@@ -2,7 +2,11 @@ import geopandas as gpd
 import pandas as pd
 
 from digipipe.scripts.datasets import mastr
-from digipipe.scripts.geo import overlay, rename_filter_attributes, write_geofile
+from digipipe.scripts.geo import (
+    overlay,
+    rename_filter_attributes,
+    write_geofile,
+)
 
 
 def process() -> None:
@@ -10,7 +14,8 @@ def process() -> None:
     units = pd.read_csv(
         snakemake.input.units,
         usecols=(
-            set(snakemake.config["unit_attributes"].keys()) | set(snakemake.config["unit_attributes_filter"].keys())
+            set(snakemake.config["unit_attributes"].keys())
+            | set(snakemake.config["unit_attributes_filter"].keys())
         ),
         dtype={"Postleitzahl": str},
     )
@@ -40,7 +45,8 @@ def process() -> None:
     units_count_wo_capacity = len(units.loc[units.plant_mastr_id.isna()])
     if units_count_wo_capacity > 0:
         print(
-            f"{units_count_wo_capacity} storages have no plant associated and " f"hence no storage capacity assigned."
+            f"{units_count_wo_capacity} storages have no plant associated and "
+            f"hence no storage capacity assigned."
         )
     units.drop(columns=["unit_mastr_id", "plant_mastr_id"], inplace=True)
 
@@ -57,12 +63,17 @@ def process() -> None:
         geometry_approximated=0,
     )
 
-    units_without_geom = units.loc[(units.lon.isna() | units.lat.isna())].drop(columns=["lon", "lat"])
+    units_without_geom = units.loc[(units.lon.isna() | units.lat.isna())].drop(
+        columns=["lon", "lat"]
+    )
 
     # Add geometry for all units without coords (<=30 kW) and
     # add column to indicate that location was inferred by geocoding
     if len(units_without_geom) > 0:
-        (units_with_inferred_geom_gdf, units_with_inferred_geom_agg_gdf,) = mastr.geocode_units_wo_geometry(
+        (
+            units_with_inferred_geom_gdf,
+            units_with_inferred_geom_agg_gdf,
+        ) = mastr.geocode_units_wo_geometry(
             units_without_geom,
             columns_agg_functions={
                 "capacity_net": ("capacity_net", "sum"),
@@ -75,7 +86,12 @@ def process() -> None:
         # Merge both GDFs
         units = pd.concat([units_with_geom, units_with_inferred_geom_gdf])
 
-        units_agg = pd.concat([units_with_geom.assign(unit_count=1), units_with_inferred_geom_agg_gdf])
+        units_agg = pd.concat(
+            [
+                units_with_geom.assign(unit_count=1),
+                units_with_inferred_geom_agg_gdf,
+            ]
+        )
     else:
         units = units_with_geom
         units_agg = units_with_geom.assign(unit_count=1)

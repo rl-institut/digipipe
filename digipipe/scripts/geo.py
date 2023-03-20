@@ -59,10 +59,10 @@ def convert_to_multipolygon(gdf: gpd.GeoDataFrame) -> gpd.GeoDataFrame:
         """
         return transform(lambda x, y, z=None: (x, y), row)
 
-    gdf["geometry"] = [MultiPolygon([feature])
-                       if feature.geom_type == "Polygon"
-                       else feature
-                       for feature in gdf["geometry"]]
+    gdf["geometry"] = [
+        MultiPolygon([feature]) if feature.geom_type == "Polygon" else feature
+        for feature in gdf["geometry"]
+    ]
 
     gdf["geometry"] = gdf["geometry"].apply(remove_z)
 
@@ -104,7 +104,9 @@ def write_geofile(
         types = gdf.geometry.type.unique()
         raise ValueError(f"Data contain multiple geometry types: {types} !")
 
-    gdf.to_file(file, layer=layer_name, schema=schema, driver=driver, encoding=encoding)
+    gdf.to_file(
+        file, layer=layer_name, schema=schema, driver=driver, encoding=encoding
+    )
 
 
 def rename_filter_attributes(
@@ -147,7 +149,9 @@ def rename_filter_attributes(
             elif isinstance(v, (int, float)):
                 query += f" & {k}=={v}"
             else:
-                raise ValueError("Data type in attribute filter is not supported!")
+                raise ValueError(
+                    "Data type in attribute filter is not supported!"
+                )
         query = query[2:]
         gdf = gdf.query(query)
 
@@ -201,7 +205,8 @@ def reproject_simplify(
         """Check if requested CRS is LAEA Europe (EPSG:3035)"""
         if target_crs.lower() != "epsg:3035":
             raise ValueError(
-                f"Cannot apply {operation} in non-equistant CRS " f"(requested CRS: {target_crs.lower()}) !"
+                f"Cannot apply {operation} in non-equistant CRS "
+                f"(requested CRS: {target_crs.lower()}) !"
             )
 
     # Transform to target CRS
@@ -271,14 +276,18 @@ def overlay(
 
         # Clip and rename columns
         gdf_clipped = (
-            gpd.overlay(gdf.assign(geometry=gdf.centroid), gdf_overlay[columns], how="intersection")
+            gpd.overlay(
+                gdf.assign(geometry=gdf.centroid),
+                gdf_overlay[columns],
+                how="intersection",
+            )
             .rename(columns=retain_rename_overlay_columns)
             .assign(geometry=geometry_backup)
         )
     else:
         # Clip and rename columns
-        gdf_clipped = gpd.overlay(gdf, gdf_overlay[columns], how="intersection").rename(
-            columns=retain_rename_overlay_columns
-        )
+        gdf_clipped = gpd.overlay(
+            gdf, gdf_overlay[columns], how="intersection"
+        ).rename(columns=retain_rename_overlay_columns)
 
     return gdf_clipped
