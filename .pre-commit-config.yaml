@@ -41,7 +41,7 @@ repos:
       - id: flake8
         name: flake8
         args:
-          - --max-line-length=120
+          - --max-line-length=80
           - --ignore=DAR101,DAR201,F821,DAR401,W503,E800
         entry: flake8
         language: python
@@ -60,7 +60,7 @@ repos:
             "--disable=C0116", # Disable the C0116 error TODO: To be fixed
             "--disable=R1729", # Disable the R1729 error TODO: To be fixed
             "--disable=C0103", # Disable the C0103 error TODO: To be fixed
-            "--max-line-length=120", # Set the maximum line length to 120
+            "--max-line-length=80", # Set the maximum line length to 80
           ]
       - id: mypy
         name: mypy
