@@ -27,6 +27,8 @@ and the versioning aim to respect [Semantic Versioning](http://semver.org/spec/v
 - Retain mastr_id in MaStR datasets
 - Fix loading of empty yml files
 - Fix loading of global config when in workflow dir
+- Fix shapely deprecation warning
+- Fix ogr2ogr conversion with recent GDAL version (v3.6.2)
 - The package management in digipipe has been changed to poetry.
 - The installation of a virtual environment is done only from the environment.yml file and via conda.
 - Apply linters on repo among others: black, isort, check-json and end-of-file-fixer

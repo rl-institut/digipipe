@@ -59,7 +59,10 @@ def convert_to_multipolygon(gdf: gpd.GeoDataFrame) -> gpd.GeoDataFrame:
         """
         return transform(lambda x, y, z=None: (x, y), row)
 
-    gdf["geometry"] = [MultiPolygon([feature]) if feature.type == "Polygon" else feature for feature in gdf["geometry"]]
+    gdf["geometry"] = [MultiPolygon([feature])
+                       if feature.geom_type == "Polygon"
+                       else feature
+                       for feature in gdf["geometry"]]
 
     gdf["geometry"] = gdf["geometry"].apply(remove_z)
 

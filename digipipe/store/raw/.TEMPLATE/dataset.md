@@ -1,6 +1,9 @@
-# .TEMPLATE
+# Name of the dataset
 
-This is a descriptive file for the raw dataset in this directory.
+Here comes a short description of the dataset.
+This is helpful for documentation and report generation purposes.
+
+# Notes (just for information, must not be part of the dataset.md file)
 
 Naming convention: `<source_datasetname>` (lower case), e.g. for a dataset on
 natural reserves by the Bundesamt für Naturschutz (BfN) you would name the dir

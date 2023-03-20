@@ -15,4 +15,4 @@ rule convert:
     params: tags=create_tag_string_osmium(config["tags"])
     shell:
         "osmium tags-filter --remove-tags -f osm {input} {params.tags} | "
-        "ogr2ogr -f GPKG -t_srs EPSG:3035 {output} /vsistdin/"
+        "ogr2ogr -f GPKG -t_srs EPSG:3035 {output} /vsistdin/?buffer_limit=-1"

@@ -1,3 +1,13 @@
 ##############################################################################
 # This file holds configuration parameters for the creation of this dataset. #
 ##############################################################################
+
+# Layers to be extracted
+layers:
+  [
+    "vg250_gem",
+    "vg250_krs",
+    "vg250_lan",
+    "vg250_rbz",
+    "vg250_vwg"
+  ]
