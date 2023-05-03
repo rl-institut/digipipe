@@ -34,6 +34,7 @@ and the versioning aim to respect [Semantic Versioning](http://semver.org/spec/v
 - The package management in digipipe has been changed to poetry.
 - The installation of a virtual environment is done only from the environment.yml file and via conda.
 - Apply linters on repo among others: black, isort, check-json and end-of-file-fixer
+- Fix C419 flake8 error in pre-commit run
 
 ### Removed
 
