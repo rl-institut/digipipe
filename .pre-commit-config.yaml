@@ -38,7 +38,7 @@ repos:
         name: flake8
         args:
           - --max-line-length=80
-          - --ignore=DAR101,DAR201,F821,DAR401,W503,E800,E722,B001,B008,C408,W605, B007
+          - --ignore=DAR101,DAR201,F821,DAR401,W503,E800,E722,B001,B008,C408,C419,W605,B007
         entry: flake8
         language: python
         types: [python]
