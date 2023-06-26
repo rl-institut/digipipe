@@ -1,6 +1,7 @@
 import geopandas as gpd
 import pandas as pd
 
+from digipipe.config import add_snake_logger
 from digipipe.scripts.datasets import mastr
 from digipipe.scripts.geo import (
     overlay,
@@ -34,7 +35,7 @@ def process() -> None:
 
     # Add geometry and drop units without coords and
     # add column to indicate that location from original data was used
-    units_with_geom = mastr.add_geometry(units)
+    units_with_geom = mastr.add_geometry(units, logger)
     units_with_geom = units_with_geom.assign(
         geometry_approximated=0,
     )
@@ -54,6 +55,7 @@ def process() -> None:
             units_with_inferred_geom_agg_gdf,
         ) = mastr.geocode_units_wo_geometry(
             units_without_geom,
+            logger,
             columns_agg_functions={
                 "capacity_net": ("capacity_net", "sum"),
                 "unit_count": ("capacity_net", "count"),
@@ -124,11 +126,22 @@ def process() -> None:
         file=snakemake.output.outfile,
         layer_name=snakemake.config["layer"],
     )
+
+    logger.info(f"Datapackage has been created at: {snakemake.output.outfile}")
+
     write_geofile(
         gdf=units_agg,
         file=snakemake.output.outfile_agg,
         layer_name=snakemake.config["layer"],
     )
 
+    logger.info(
+        f"Datapackage has been created at: {snakemake.output.outfile_agg}"
+    )
 
-process()
+
+if __name__ == "__main__":
+    logger = add_snake_logger(
+        str(snakemake.log), "bnetza_mastr_combustion_region"
+    )
+    process()

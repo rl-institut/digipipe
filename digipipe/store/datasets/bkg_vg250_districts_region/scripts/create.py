@@ -2,6 +2,7 @@ import sys
 
 import geopandas as gpd
 
+from digipipe.config import add_snake_logger
 from digipipe.scripts.config import read_config
 from digipipe.scripts.geo import (
     convert_to_multipolygon,
@@ -33,9 +34,12 @@ def process():
         layer_name=config["layer"],
     )
 
+    logger.info(f"Datapackage has been created at: {outfile}")
+
 
 if __name__ == "__main__":
     infile = sys.argv[1]
     config = read_config(sys.argv[2])
     outfile = sys.argv[3]
+    logger = add_snake_logger(None, "bkg_vg250_districts_region")
     process()

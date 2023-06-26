@@ -51,6 +51,7 @@ and the versioning aim to respect [Semantic Versioning](http://semver.org/spec/v
 - Add dataset: potentialarea_pv_ground_region
 - Add dataset: app datapackage
 - Add dataset: potentialarea_pv_roof_region
+- Add Logging
 
 ### Changed
 

@@ -9,12 +9,14 @@ import geopandas as gpd
 from digipipe.scripts.datasets.mastr import create_stats_per_municipality
 from digipipe.store.utils import (
     get_abs_dataset_path,
+    get_abs_store_root_path,
     PATH_TO_REGION_MUNICIPALITIES_GPKG,
     PATH_TO_REGION_DISTRICTS_GPKG
 )
 
 DATASET_PATH = get_abs_dataset_path("datasets", "bnetza_mastr_hydro_region")
 SOURCE_DATASET_PATH = get_abs_dataset_path("preprocessed", "bnetza_mastr", data_dir=True)
+STORE_PATH = get_abs_store_root_path()
 
 rule create:
     """
@@ -31,6 +33,7 @@ rule create:
         outfile_agg=DATASET_PATH / "data" / "bnetza_mastr_hydro_agg_region.gpkg"
     params:
         config_file=DATASET_PATH / "config.yml"
+    log: STORE_PATH / "datasets" / ".log" / "bnetza_mastr_hydro_region.log"
     script:
         DATASET_PATH / "scripts" / "create.py"
 

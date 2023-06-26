@@ -1,6 +1,8 @@
 import json
 import re
 
+from digipipe.config import add_snake_logger
+
 
 def process() -> None:
     def replace_umlaut(s: str) -> str:
@@ -29,5 +31,11 @@ def process() -> None:
     with open(snakemake.output.outfile, "w", encoding="utf8") as f:
         json.dump(naming_dict, f, ensure_ascii=False, indent=4)
 
+    logger.info(f"Datapackage has been created at: {snakemake.output.outfile}")
 
-process()
+
+if __name__ == "__main__":
+    logger = add_snake_logger(
+        str(snakemake.log), "bnetza_mastr_attribute_captions"
+    )
+    process()

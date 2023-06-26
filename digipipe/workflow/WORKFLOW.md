@@ -63,3 +63,6 @@ The graphs also provide information on the completed (solid lines) and pending
   - [store/datasets/module.smk](../store/datasets/module.smk)
 - In each of these modules, the rules as well as the config from the contained
   datasets are imported.
+- These rules include a logging, where further information is collected during
+  processing a rule. The log file is located in the same directory as the
+  dataset created by the corresponding rule.

@@ -176,6 +176,7 @@ def add_voltage_level(
 
 def add_geometry(
     units_df: pd.DataFrame,
+    logger: "logging.Logger",
     drop_units_wo_coords: bool = True,
 ) -> gpd.GeoDataFrame:
     """
@@ -186,6 +187,8 @@ def add_geometry(
     ----------
     units_df : pd.DataFrame
         Units with columns `lat` and `lon` in CRS WGS84 (EPSG:4326)
+    logger : 'logging.Logger'
+        Logger used to write in log files
     drop_units_wo_coords : bool
         Drop units which do not have valid lat and lon values.
         Note: coordinates in the MaStR are only provided for plants>30 kW.
@@ -199,7 +202,7 @@ def add_geometry(
     if drop_units_wo_coords:
         units_count_orig = len(units_df)
         units_df = units_df.loc[(~units_df.lon.isna() & ~units_df.lat.isna())]
-        print(
+        logger.warning(
             f"{units_count_orig-len(units_df)} units have no or invalid "
             f"coordinates. Their locations will be geocoded."
         )
@@ -218,6 +221,7 @@ def add_geometry(
 
 def geocode(
     units_df: pd.DataFrame,
+    logger: "logging.Logger",
     user_agent: str = "geocoder",
     interval: int = 1,
     target_crs: str = "EPSG:3035",
@@ -231,6 +235,8 @@ def geocode(
         Units from MaStR. Must contain the following columns:
         * zip_code (str)
         * city (str)
+    logger : 'logging.Logger'
+        Logger used to write in log files
     user_agent : str
         Some app name. Defaults to "geocoder"
     interval : int
@@ -248,6 +254,7 @@ def geocode(
     def geocoder(
         user_agent: str,
         interval: int,
+        logger: "logging.Logger",
     ) -> RateLimiter:
         """Setup Nominatim geocoding class.
 
@@ -258,6 +265,8 @@ def geocode(
         interval : int
             Delay in seconds to use between requests to Nominatim.
             A minimum of 1 is advised.
+        logger : 'logging.Logger'
+            Logger used to write in log files
 
         Returns
         -------
@@ -271,13 +280,14 @@ def geocode(
                 min_delay_seconds=interval,
             )
         except GeocoderUnavailable:
-            print("Geocoder unavailable, aborting geocoding!")
+            logger.error("Geocoder unavailable, aborting geocoding!")
             raise
 
     # Define geocoder
     ratelimiter = geocoder(
         user_agent,
         interval,
+        logger,
     )
 
     # Merge zip code and city and get unique values
@@ -289,7 +299,7 @@ def geocode(
         columns=["zip_and_city"],
     )
     # Geocode unique locations!
-    print(
+    logger.info(
         f"Geocoding {len(unique_locations)} unique locations, this will take "
         f"about {round(len(unique_locations) * interval / 60, 1)} min..."
     )
@@ -324,6 +334,7 @@ def geocode(
 
 def geocode_units_wo_geometry(
     units_df: pd.DataFrame,
+    logger: "logging.Logger",
     columns_agg_functions: dict,
     target_crs: str = "EPSG:3035",
 ) -> Tuple[gpd.GeoDataFrame, gpd.GeoDataFrame]:
@@ -339,6 +350,8 @@ def geocode_units_wo_geometry(
         Units without geometry. Must have columns "zip_code" and "city" as well
         as the columns specified in `columns_agg_functions`.
         Note: If existent, geometry column will be overwritten.
+    logger : 'logging.Logger'
+        Logger used to write in log files
     columns_agg_functions : dict
         Defines how columns shall be aggregated. Format as in Pandas' .agg()
         function.
@@ -417,13 +430,13 @@ def geocode_units_wo_geometry(
             "(columns_agg_functions) are not present, cannot proceed."
         )
 
-    units_with_inferred_geom_gdf = geocode(units_df)
+    units_with_inferred_geom_gdf = geocode(units_df, logger)
     units_with_inferred_geom_gdf = units_with_inferred_geom_gdf.assign(
         geometry_approximated=1,
     )
 
     units_with_inferred_geom_agg_gdf = aggregate_units_wo_geometry(
-        units_with_inferred_geom_gdf.copy()
+        units_with_inferred_geom_gdf.copy(),
     )
 
     return units_with_inferred_geom_gdf, units_with_inferred_geom_agg_gdf

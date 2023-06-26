@@ -102,14 +102,18 @@ rule clean:
             get_abs_dataset_path("preprocessed", "{name}", data_dir=True) / "*",
             name=config.get("store")["preprocessed"].keys()
         ),
+        preprocessed_logging = get_abs_dataset_path("preprocessed", ".log", data_dir=False) / "*",
         datasets=expand(
             get_abs_dataset_path("datasets", "{name}", data_dir=True) / "*",
             name=config.get("store")["datasets"].keys()
-        )
+        ),
+        datasets_logging = get_abs_dataset_path("datasets", ".log", data_dir=False) / "*",
     shell:
         """
         rm -f {params.preprocessed}
+        rm -f {params.preprocessed_logging}
         rm -f {params.datasets}
+        rm -f {params.datasets_logging}
 
         # Check if there are subdirectories in appdata esys dir
         if [ "$(find {APPDATA_ESYS_PATH} -mindepth 1 -type d)" ]; then

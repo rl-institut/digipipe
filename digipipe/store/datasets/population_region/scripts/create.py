@@ -1,6 +1,8 @@
 import geopandas as gpd
 import pandas as pd
 
+from digipipe.config import add_snake_logger
+
 
 def process() -> None:
     # pylint: disable=R0914
@@ -23,7 +25,7 @@ def process() -> None:
     )
     pop_history = pop_history.loc[pop_history.index.isin(muns.ags)]
     avail_years_history = pop_history.columns.astype(int).to_list()
-    print(f"Historical years: {avail_years_history}")
+    logger.info(f"Historical years: {avail_years_history}")
 
     # Prognosis: load state data on municipal level and filter by region
     pop_prognosis_years_mun = snakemake.config["prognosis_fstate_munlevel"][
@@ -39,7 +41,7 @@ def process() -> None:
             pop_prognosis_mun.index.isin(muns.ags)
         ]
         avail_years_prognosis = pop_prognosis_mun.columns.astype(int).to_list()
-        print(
+        logger.info(
             f"Prognosis years (state data on municipal level): "
             f"{pop_prognosis_years_mun}"
         )
@@ -48,7 +50,7 @@ def process() -> None:
     else:
         pop_reference = pop_history
         pop_reference_years = avail_years_history
-        print(
+        logger.warning(
             "No years for prognosis with state data on municipal level "
             "provided, skipping..."
         )
@@ -68,7 +70,7 @@ def process() -> None:
         avail_years_prognosis = pop_prognosis_district.columns.astype(
             int
         ).to_list()
-        print(
+        logger.info(
             f"Prognosis years (country data on district level): "
             f"{pop_prognosis_years_district}"
         )
@@ -107,7 +109,7 @@ def process() -> None:
                 .round()
             )
     else:
-        print(
+        logger.warning(
             "No years for prognosis with country data on district level "
             "provided, skipping..."
         )
@@ -115,7 +117,7 @@ def process() -> None:
     # Extrapolate population linearly for years from config
     extrapol_years = snakemake.config["extrapolation"]["years"]
     if len(extrapol_years) > 0:
-        print(f"Extrapolation years: {extrapol_years}")
+        logger.info(f"Extrapolation years: {extrapol_years}")
         for year in extrapol_years:
             # Extrapolate using the last 2 available years
             year_delta_base = (
@@ -132,7 +134,9 @@ def process() -> None:
                 * year_delta_extrapol
             )
     else:
-        print("No extrapolation years provided, skipping extrapolation...")
+        logger.warning(
+            "No extrapolation years provided, skipping extrapolation..."
+        )
 
     # Drop not requested years
     pop_reference.drop(
@@ -180,6 +184,9 @@ def process() -> None:
 
     population.to_csv(snakemake.output[0])
 
+    logger.info(f"Datapackage has been created at: {snakemake.output[0]}")
+
 
 if __name__ == "__main__":
+    logger = add_snake_logger(str(snakemake.log), "population_region")
     process()
