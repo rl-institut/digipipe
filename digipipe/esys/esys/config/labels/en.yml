@@ -1,7 +1,7 @@
 # oil: Oil  Raises error as "oil" is in "boiler" -> duplicate mappings
 biomass: Biomass
 biomass-biogas_plant: Biogas plant
-biomass-shortage: Biomass shortage
+biomass-import: Biomass Import
 biogas: Biogas
 biogas-biogas_upgrading_plant: Biogas upgrading plant
 biogas-bpchp_central: Biogas central CHP
@@ -49,7 +49,7 @@ solar-pv_rooftop: PV rooftop
 solar-thermalcollector_central: Heat cen. solar thermal collector
 solar-thermalcollector_decentral: Heat dec. solar thermal collector
 wind-onshore: Wind on
-wood-shortage: Wood shortage
+wood-import: Wood Import
 wood-extchp_central: Wood central CHP
 wood-extchp_decentral: Wood decentral CHP
-lignite-shortage: Lignite shortage
+lignite-import: Lignite Import

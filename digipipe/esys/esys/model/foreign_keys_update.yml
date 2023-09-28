@@ -1,5 +1,5 @@
 'bus': [
-    'biomass-shortage',
+    'biomass-import',
     'ch4-import',
     'electricity-bev_charging',
     'electricity-large_scale_battery',
@@ -22,8 +22,8 @@
     'heat_decentral-demand_cts',
     'heat_decentral-demand_ind',
     'heat_decentral-storage',
-    'wood-shortage',
-    'lignite-shortage',
+    'wood-import',
+    'lignite-import',
     'solar-pv_ground',
     'solar-pv_rooftop',
     'solar-thermalcollector_central',

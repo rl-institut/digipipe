@@ -11,7 +11,7 @@ busses:
 #  - h2
 
 components:
-  - biomass-shortage
+  - biomass-import
   - electricity-import
   - electricity-export
   - electricity-bev_charging

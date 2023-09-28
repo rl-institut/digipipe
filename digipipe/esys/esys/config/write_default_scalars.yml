@@ -38,7 +38,7 @@ write_default_scalars:
     "var_name": "capacity",
     "type": shortage,
     "tech": None,
-    "which": "empty",
+    "which": "high_capacity",
     "var_unit": "MW",
   }
   capacity_excess: {
@@ -52,7 +52,7 @@ write_default_scalars:
     "var_name": "amount",
     "type": None,
     "tech": None,
-    "which": "empty",
+    "which": "zeros",
     "var_unit": "MWh/a",
   }
   capacity_potential: {
@@ -89,13 +89,6 @@ write_default_scalars:
     "tech": None,
     "which": "empty_dict",
     "var_unit": "None",
-  }
-  marginal_cost_shortage: {
-    "var_name": "marginal_cost",
-    "type": shortage,
-    "tech": None,
-    "which": "high_costs",
-    "var_unit": "EUR/MWh",
   }
   marginal_cost_volatile: {
     "var_name": "marginal_cost",

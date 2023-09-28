@@ -371,9 +371,9 @@ ch4-import:
 
 # Bus "wood":
 
-wood-shortage:
+wood-import:
   carrier: wood
-  tech: shortage
+  tech: import
   type: shortage
   foreign_keys:
     bus: wood
@@ -384,9 +384,9 @@ wood-shortage:
 
 # Bus "lignite":
 
-lignite-shortage:
+lignite-import:
   carrier: lignite
-  tech: shortage
+  tech: import
   type: shortage
   foreign_keys:
     bus: lignite
@@ -397,9 +397,9 @@ lignite-shortage:
 
 # Bus "biomass":
 
-biomass-shortage:
+biomass-import:
   carrier: biomass
-  tech: shortage
+  tech: import
   type: shortage
   foreign_keys:
     bus: biomass

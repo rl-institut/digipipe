@@ -1,7 +1,7 @@
 # oil: Öl  Raises error as "oil" is in "boiler" -> duplicate mappings
 biomass: Biomasse
 biomass-biogas_plant: Biogasanlage
-biomass-shortage: Biomasse Shortage
+biomass-import: Biomasse Import
 biogas: Biogas
 biogas-biogas_upgrading_plant: Biogas-Aufbereitungsanlage
 biogas-bpchp_central: Biogas zentrale KWK
@@ -33,7 +33,7 @@ h2-excess: H2 Überschuss
 h2-extchp_central: H2 zentrale GUD
 h2-extchp_decentral: H2 dezentrale GUD
 h2-import: H2 Import
-h2-shortage: H2 Import
+h2-shortage: H2 Shortage
 heat_central-demand_hh: zen. Wärmebedarf HH
 heat_central-demand_cts: zen. Wärmebedarf GHD
 heat_central-demand_ind: zen. Wärmebedarf I
@@ -45,13 +45,13 @@ heat_decentral-storage: dez. Wärmespeicher
 hydro-reservoir: Reservoir
 hydro-ror: Laufwasserkraft
 lignite: Braunkohle
-lignite-shortage: Braunkohle Shortage
+lignite-import: Braunkohle Import
 nuclear-st: Kernkraftwerk
 hard coal: Steinkohle
 wood: Holz
 wood-extchp_central: Holz zentrale KWK
 wood-extchp_decentral: Holz dezentrale KWK
-wood-shortage: Holz Shortage
+wood-import: Holz Import
 other: Andere
 solar-pv_ground: PV Freifläche
 solar-pv_rooftop: PV Aufdach
